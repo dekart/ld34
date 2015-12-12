@@ -12,6 +12,8 @@ Meteor = class extends FallingObject
     )
 
   onShieldHit: ->
+    @sprite.getParent().getParent().particles.breakMeteorAt(@sprite.getPosition())
+
     @sprite.runAction(new cc.FadeTo(0.1, 0))
     @sprite.runAction(
       new cc.Sequence(
@@ -23,6 +25,6 @@ Meteor = class extends FallingObject
     )
 
   onShieldMissed: ->
-    @sprite.getParent().blinkRedFrame()
+    @sprite.getParent().animateHit()
 
     @.removeFromScene()

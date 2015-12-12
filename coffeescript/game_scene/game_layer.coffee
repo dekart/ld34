@@ -89,6 +89,20 @@ GameLayer = cc.Layer.extend(
       1.5
     )
 
+  animateHit: ->
+    @.getParent().particles.explodeAt(@ship.getPosition())
+
+    @ship.runAction(
+      cc.Sequence.create(
+        cc.MoveBy.create(0.1, cc.p(10, 0)),
+        cc.MoveBy.create(0.1, cc.p(0, -10)),
+        cc.MoveBy.create(0.1, cc.p(0, 10)),
+        cc.MoveBy.create(0.1, cc.p(-10, 0))
+      )
+    )
+
+    @.blinkRedFrame()
+
   blinkRedFrame: ->
     @redFrame.stopAllActions()
     @redFrame.setVisible(true)

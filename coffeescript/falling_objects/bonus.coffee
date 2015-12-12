@@ -3,6 +3,8 @@ Bonus = class extends FallingObject
     @sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("bonus.png"))
 
   onShieldHit: ->
+    @sprite.getParent().getParent().particles.breakContainerAt(@sprite.getPosition())
+
     @sprite.runAction(new cc.FadeTo(0.1, 0))
     @sprite.runAction(
       new cc.Sequence(
