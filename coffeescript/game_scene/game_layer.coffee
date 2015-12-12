@@ -21,14 +21,6 @@ GameLayer = cc.Layer.extend(
 
     @.addChild(@shield)
 
-    @redFrame = new cc.Sprite(resources.red_frame_png)
-
-    @redFrame.setPosition(windowSize.width / 2, windowSize.height /2)
-    @redFrame.setLocalZOrder(255)
-    @redFrame.setVisible(false)
-
-    @.addChild(@redFrame)
-
     cc.eventManager.addListener(
       event: cc.EventListener.KEYBOARD
       onKeyPressed: (e)=> @.onKeyPressed(e),
@@ -42,6 +34,8 @@ GameLayer = cc.Layer.extend(
     switch keycode
       when 32
         @shield.setVisible(!@shield.isVisible())
+      when 82
+        document.location = document.location
       else
         console.log("key pressed: ", keycode)
 
@@ -101,19 +95,5 @@ GameLayer = cc.Layer.extend(
       )
     )
 
-    @.blinkRedFrame()
-
-  blinkRedFrame: ->
-    @redFrame.stopAllActions()
-    @redFrame.setVisible(true)
-    @redFrame.setOpacity(255)
-
-    @redFrame.runAction(
-      new cc.Sequence(
-        new cc.FadeTo(0.5, 0)
-        new cc.CallFunc(()=>
-          @redFrame.setVisible(false)
-        )
-      )
-    )
+    @.getParent().ui.blinkRedFrame()
 )
