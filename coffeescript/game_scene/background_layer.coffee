@@ -42,8 +42,8 @@ BackgroundLayer = cc.Layer.extend(
   scheduleBackgroundMovement: ->
     windowSize = cc.director.getWinSize()
 
-    @sprite3.setPosition(windowSize.width * 0.5, windowSize.height * 0.5)
-    @sprite4.setPosition(windowSize.width * 0.5, windowSize.height * 1.5)
+    @sprite3.setPosition(windowSize.width * 0.5, windowSize.height * 0.3) # Twist backgrounds a little to avoid blurring effect
+    @sprite4.setPosition(windowSize.width * 0.5, windowSize.height * 1.3)
 
     @sprite3.runAction(new cc.MoveBy(25, 0, -windowSize.height))
     @sprite4.runAction(

@@ -5,6 +5,9 @@ GameScene = cc.Scene.extend(
     # Cache all used sprites here
     cc.spriteFrameCache.addSpriteFrames(resources.ui_plist)
 
-    @.addChild(new BackgroundLayer())
-    @.addChild(new GameLayer())
+    @background = new BackgroundLayer()
+    @game = new GameLayer()
+
+    @.addChild(@background)
+    @.addChild(@game)
 )

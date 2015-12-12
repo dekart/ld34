@@ -73,6 +73,8 @@ cc.game.onStart = function(){
 
     cc.LoaderScene.preload(resourcePaths, function () {
       cc.director.runScene(new GameScene());
+
+      document.getElementById('gameCanvas').focus()
     }, this);
 };
 cc.game.run();
