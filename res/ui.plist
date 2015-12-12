@@ -4,18 +4,44 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>player.png</key>
+            <key>particle.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{46,46}}</string>
+                <string>{{216,258},{14,38}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{2,2},{46,46}}</string>
+                <string>{{0,0},{14,38}}</string>
                 <key>sourceSize</key>
-                <string>{50,50}</string>
+                <string>{14,38}</string>
+            </dict>
+            <key>shield.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{464,254}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{464,254}}</string>
+                <key>sourceSize</key>
+                <string>{464,254}</string>
+            </dict>
+            <key>ship.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,258},{212,192}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{212,192}}</string>
+                <key>sourceSize</key>
+                <string>{212,192}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -25,9 +51,9 @@
             <key>realTextureFileName</key>
             <string>ui.png</string>
             <key>size</key>
-            <string>{50,50}</string>
+            <string>{468,452}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:71fa7e6c3abc8521f79378dcf7ebe974:788fc54e95722991dbb0c7ec42259594:e489eb72a1dac3e9a97caaf8aad1ac42$</string>
+            <string>$TexturePacker:SmartUpdate:56de71a73efac242cc8749c8e1108f88:f31bc0a7e0d882daa43f99164aa21740:e489eb72a1dac3e9a97caaf8aad1ac42$</string>
             <key>textureFileName</key>
             <string>ui.png</string>
         </dict>
