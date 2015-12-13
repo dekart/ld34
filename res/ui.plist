@@ -85,11 +85,11 @@
             <key>rocket.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{296,525},{16,76}}</string>
+                <string>{{64,944},{16,76}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{16,76}}</string>
                 <key>sourceSize</key>
@@ -173,6 +173,19 @@
                 <key>sourceSize</key>
                 <string>{36,48}</string>
             </dict>
+            <key>warp_line.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{296,525},{3,93}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{3,93}}</string>
+                <key>sourceSize</key>
+                <string>{3,93}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -183,7 +196,7 @@
             <key>size</key>
             <string>{320,964}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:eda82d8e6e095e8904f12a7f0d07ddb8:9dd564cf45461f94a41c50b31874c93a:e489eb72a1dac3e9a97caaf8aad1ac42$</string>
+            <string>$TexturePacker:SmartUpdate:0ab66e92c5b2dc416ef6b504514982f5:ff8e5d790ffb7def0bca3ee5af05e28a:e489eb72a1dac3e9a97caaf8aad1ac42$</string>
             <key>textureFileName</key>
             <string>ui.png</string>
         </dict>

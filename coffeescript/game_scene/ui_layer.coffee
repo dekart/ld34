@@ -1,4 +1,6 @@
 UILayer = cc.Layer.extend(
+  warpLines: []
+
   ctor: ->
     @._super()
 
@@ -94,4 +96,28 @@ UILayer = cc.Layer.extend(
         marker.runAction(
           new cc.FadeTo(0.5, 255)
         )
+
+
+  goToWarp: ->
+    windowSize = cc.director.getWinSize()
+
+    for i in [0..500]
+      line = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("warp_line.png"))
+
+      line.setPosition(
+        windowSize.width * _.random(0, 300) * 0.01,
+        windowSize.height * _.random(0, 300) * 0.01
+      )
+
+      line.setOpacity(0)
+
+      @.addChild(line)
+
+      line.runAction(
+        cc.Spawn.create(
+          cc.FadeTo.create(2, 255)
+          cc.MoveBy.create(5, 0, -windowSize.height * 2)
+        )
+      )
+
 )

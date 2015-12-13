@@ -6,6 +6,7 @@ GameLayer = cc.Layer.extend(
   asteroids: []
   rockets: []
   shieldsUp: false
+  inWarp: false
 
   ctor: ->
     @._super()
@@ -36,6 +37,8 @@ GameLayer = cc.Layer.extend(
     @.scheduleNextObject()
 
   onKeyPressed: (keycode)->
+    return if @inWarp
+
     switch keycode
       when 32
         @shieldsUp = !@shieldsUp
@@ -82,6 +85,8 @@ GameLayer = cc.Layer.extend(
     rocket.launch(target)
 
   releaseObject: ->
+    return if @inWarp
+
     windowSize = cc.director.getWinSize()
 
     chance = Math.random()
@@ -105,6 +110,8 @@ GameLayer = cc.Layer.extend(
     object.launch(@speed * (Math.random() + 0.5))
 
   performHit: (scale)->
+    return if @inWarp
+
     @.getParent().particles.explodeAt(@ship.getPosition())
 
     @ship.runAction(
@@ -124,6 +131,8 @@ GameLayer = cc.Layer.extend(
       cc.director.runScene(new GameOverScene())
 
   collectFuel: ->
+    return if @inWarp
+
     @fuelCollected += 1
 
     @.getParent().ui.setFuelCollected(@fuelCollected)
@@ -131,6 +140,26 @@ GameLayer = cc.Layer.extend(
     @speed = 1 + globals.speedGrowth * Math.ceil(@fuelCollected / globals.fuelPerSpeedPoint)
 
     @.getParent().background.speed = @speed
+
+    if @fuelCollected >= globals.fuelPerSpeedPoint * 8
+      @.goToWarp()
+
+  goToWarp: ->
+    @inWarp = true
+
+    @.getParent().ui.goToWarp()
+
+    windowSize = cc.director.getWinSize()
+
+    @ship.runAction(
+      cc.EaseIn.create(
+        cc.MoveBy.create(2, 0, windowSize.height),
+        2
+      )
+    )
+
+    @shield.setVisible(false)
+
 
   removeAsteroid: (asteroid)->
     @asteroids = _.without(@asteroids, asteroid)
