@@ -77,7 +77,7 @@ cc.game.onStart = function(){
 
       cc.audioEngine.playMusic(resources.music_mp3, true);
 
-      cc.director.runScene(new GameScene());
+      cc.director.runScene(new IntroScene());
       // cc.director.runScene(new GameOverScene());
 
       document.getElementById('gameCanvas').focus()
