@@ -3,6 +3,9 @@ GameLayer = cc.Layer.extend(
   health: 10
   fuelCollected: 0
   speed: 1
+  asteroids: []
+  rockets: []
+  shieldsUp: false
 
   ctor: ->
     @._super()
@@ -35,7 +38,11 @@ GameLayer = cc.Layer.extend(
   onKeyPressed: (keycode)->
     switch keycode
       when 32
-        @shield.setVisible(!@shield.isVisible())
+        @shieldsUp = !@shieldsUp
+
+        @shield.setVisible(@shieldsUp)
+      when 90
+        @.launchRocket() unless @shieldsUp
       when 82
         document.location = document.location
       else
@@ -63,6 +70,17 @@ GameLayer = cc.Layer.extend(
       1 / @speed
     )
 
+  launchRocket: ->
+    target = _.min(@asteroids, (a)-> a.sprite.getPosition().y)
+
+    return unless target instanceof Asteroid
+
+    rocket = new Rocket(@ship)
+
+    @.addChild(rocket.sprite)
+
+    rocket.launch(target)
+
   releaseObject: ->
     windowSize = cc.director.getWinSize()
 
@@ -74,6 +92,8 @@ GameLayer = cc.Layer.extend(
       object = new Bonus()
     else
       object = new Asteroid()
+
+      @asteroids.push(object)
 
     object.sprite.setPosition(
       windowSize.width * Math.random(),
@@ -111,4 +131,7 @@ GameLayer = cc.Layer.extend(
     @speed = 1 + globals.speedGrowth * Math.ceil(@fuelCollected / globals.fuelPerSpeedPoint)
 
     @.getParent().background.speed = @speed
+
+  removeAsteroid: (asteroid)->
+    @asteroids = _.without(@asteroids, asteroid)
 )

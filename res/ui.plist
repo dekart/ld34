@@ -82,6 +82,19 @@
                 <key>sourceSize</key>
                 <string>{14,38}</string>
             </dict>
+            <key>rocket.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{296,525},{16,76}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{16,76}}</string>
+                <key>sourceSize</key>
+                <string>{16,76}</string>
+            </dict>
             <key>shield.png</key>
             <dict>
                 <key>frame</key>
@@ -170,7 +183,7 @@
             <key>size</key>
             <string>{320,964}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:875f5c439c12096542897a2306dc809a:e31165ca5d16e0b112d0b4493843decc:e489eb72a1dac3e9a97caaf8aad1ac42$</string>
+            <string>$TexturePacker:SmartUpdate:eda82d8e6e095e8904f12a7f0d07ddb8:9dd564cf45461f94a41c50b31874c93a:e489eb72a1dac3e9a97caaf8aad1ac42$</string>
             <key>textureFileName</key>
             <string>ui.png</string>
         </dict>

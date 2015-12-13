@@ -1,5 +1,6 @@
 Asteroid = class extends FallingObject
   baseSpeed: 15
+  health: 3
 
   constructor: ->
     @sprite = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("asteroid.png"))
@@ -22,3 +23,16 @@ Asteroid = class extends FallingObject
     @sprite.getParent().performHit(5)
 
     @.removeFromScene()
+
+  removeFromScene: ->
+    @sprite.getParent().removeAsteroid(@)
+
+    super
+
+  takeHit: ->
+    @health -= 1
+
+    @sprite.getParent().getParent().particles.explodeAt(@sprite.getPosition())
+
+    if @health <= 0
+      @.removeFromScene()

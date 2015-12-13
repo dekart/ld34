@@ -1,12 +1,16 @@
 FallingObject = class
   sprite: null
   baseSpeed: 5
+  startingPosition: null
 
   constructor: ->
     # Should be extended
 
   launch: (speed)->
     myPosition = @sprite.getPosition()
+
+    @startingPosition = myPosition
+
     shipPosition = @sprite.getParent().getChildByTag("ship").getPosition()
     shipPosition.x += 130 * (0.5 - Math.random())
 
@@ -30,9 +34,7 @@ FallingObject = class
     )
 
   checkShields: ->
-    shield = @sprite.getParent().getChildByTag("shield")
-
-    if shield.isVisible()
+    if @sprite.getParent().shieldsUp
       @.onShieldHit()
     else
       @.onShieldMissed()
