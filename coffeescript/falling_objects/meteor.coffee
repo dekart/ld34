@@ -25,6 +25,6 @@ Meteor = class extends FallingObject
     )
 
   onShieldMissed: ->
-    @sprite.getParent().performHit()
+    @sprite.getParent().performHit(1)
 
     @.removeFromScene()

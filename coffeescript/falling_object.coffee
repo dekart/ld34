@@ -1,5 +1,6 @@
 FallingObject = class
   sprite: null
+  baseSpeed: 5
 
   constructor: ->
     # Should be extended
@@ -11,7 +12,7 @@ FallingObject = class
 
     distanceToShield = 1 - 90 / 1242
 
-    totalTime = 5 / speed
+    totalTime = @baseSpeed / speed
     timeToShield = totalTime * distanceToShield
 
     shieldPointPosition = {

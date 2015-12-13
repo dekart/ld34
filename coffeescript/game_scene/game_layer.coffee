@@ -1,5 +1,8 @@
 GameLayer = cc.Layer.extend(
   bonuses: []
+  health: 10
+  fuelCollected: 0
+  speed: 1
 
   ctor: ->
     @._super()
@@ -20,11 +23,6 @@ GameLayer = cc.Layer.extend(
     @shield.setVisible(false)
 
     @.addChild(@shield)
-
-    @health = 10
-    @fuelCollected = 0
-
-    @speed = 1
 
     cc.eventManager.addListener(
       event: cc.EventListener.KEYBOARD
@@ -68,10 +66,14 @@ GameLayer = cc.Layer.extend(
   releaseObject: ->
     windowSize = cc.director.getWinSize()
 
-    if Math.random() < 0.5
+    chance = Math.random()
+
+    if chance < 0.45
       object = new Meteor()
-    else
+    else if chance < 0.9
       object = new Bonus()
+    else
+      object = new Asteroid()
 
     object.sprite.setPosition(
       windowSize.width * Math.random(),
@@ -82,7 +84,7 @@ GameLayer = cc.Layer.extend(
 
     object.launch(@speed * (Math.random() + 0.5))
 
-  performHit: ->
+  performHit: (scale)->
     @.getParent().particles.explodeAt(@ship.getPosition())
 
     @ship.runAction(
@@ -94,7 +96,7 @@ GameLayer = cc.Layer.extend(
       )
     )
 
-    @health -= 1
+    @health -= scale
 
     if @health > 0
       @.getParent().ui.decreaseHealth(@health)
