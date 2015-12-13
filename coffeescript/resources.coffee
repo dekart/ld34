@@ -7,6 +7,7 @@ resources = {
   rocket_mp3:           "res/rocket.mp3"
   warp_mp3:           "res/warp.mp3"
   container_mp3:           "res/container.mp3"
+  ship_explosion_mp3:           "res/ship_explosion.mp3"
   ui_png:           "res/ui.png"
   ui_plist:         "res/ui.plist"
   background_jpg:   "res/background.jpg"
@@ -17,6 +18,7 @@ resources = {
   explosion_plist:  "res/explosion.plist"
   container_break_plist:  "res/container_break.plist"
   meteor_break_plist:  "res/meteor_break.plist"
+  ship_explosion_plist:  "res/ship_explosion.plist"
 }
 
 resourcePaths = (value for key, value of resources)

@@ -10,10 +10,21 @@ GameOverLayer = cc.Layer.extend(
 
     @.addChild(@gameOverText)
 
-    @instructionText = new cc.LabelTTF("Please reload page to restart the game", "Arial", 60)
+    @retryButton = new ccui.Button()
+    @retryButton.loadTextureNormal("button.png", ccui.Widget.PLIST_TEXTURE)
+    @retryButton.setPosition(windowSize.width * 0.5, windowSize.height * 0.35)
+    @retryButton.addTouchEventListener(@.onRestartTouch, @)
+
+    @.addChild(@retryButton)
+
+    @instructionText = new cc.LabelTTF("Try Again", "Arial", 60)
     @instructionText.setFontFillColor(cc.color(255, 255, 130))
-    @instructionText.setPosition(windowSize.width * 0.5, windowSize.height * 0.45)
+    @instructionText.setPosition(windowSize.width * 0.5, windowSize.height * 0.35)
 
     @.addChild(@instructionText)
 
+
+  onRestartTouch: (sender, type)->
+    if type == ccui.Widget.TOUCH_ENDED
+      document.location = document.location
 )

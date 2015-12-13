@@ -1,12 +1,12 @@
 GameLayer = cc.Layer.extend(
   bonuses: []
-  health: 10
+  health: 1#10
   fuelCollected: 0
   speed: 1
   asteroids: []
   rockets: []
   shieldsUp: false
-  inWarp: false
+  inactive: false
 
   ctor: ->
     @._super()
@@ -37,7 +37,7 @@ GameLayer = cc.Layer.extend(
     @.scheduleNextObject()
 
   onKeyPressed: (keycode)->
-    return if @inWarp
+    return if @inactive
 
     switch keycode
       when 32
@@ -92,7 +92,7 @@ GameLayer = cc.Layer.extend(
     rocket.launch(target)
 
   releaseObject: ->
-    return if @inWarp
+    return if @inactive
 
     windowSize = cc.director.getWinSize()
 
@@ -117,7 +117,7 @@ GameLayer = cc.Layer.extend(
     object.launch(@speed * (Math.random() + 0.5))
 
   performHit: (scale)->
-    return if @inWarp
+    return if @inactive
 
     @.getParent().particles.explodeAt(@ship.getPosition())
 
@@ -135,10 +135,26 @@ GameLayer = cc.Layer.extend(
     if @health > 0
       @.getParent().ui.decreaseHealth(@health)
     else
-      cc.director.runScene(new GameOverScene())
+      cc.audioEngine.playEffect(resources.ship_explosion_mp3)
+
+      @inactive = true
+
+      @ship.setVisible(false)
+
+      @.getParent().particles.explodeShipAt(@ship.getPosition())
+
+      @.runAction(
+        cc.Sequence.create(
+          cc.DelayTime.create(2)
+          cc.CallFunc.create(
+            ()=> cc.director.runScene(new GameOverScene())
+          )
+        )
+      )
+
 
   collectFuel: ->
-    return if @inWarp
+    return if @inactive
 
     cc.audioEngine.playEffect(resources.container_mp3)
 
@@ -154,7 +170,7 @@ GameLayer = cc.Layer.extend(
       @.goToWarp()
 
   goToWarp: ->
-    @inWarp = true
+    @inactive = true
 
     @.getParent().ui.goToWarp()
 
