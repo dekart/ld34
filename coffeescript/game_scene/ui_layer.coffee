@@ -93,8 +93,13 @@ UILayer = cc.Layer.extend(
 
       unless marker.isVisible()
         marker.setVisible(true)
+        marker.setScale(3, 3)
+
         marker.runAction(
-          new cc.FadeTo(0.5, 255)
+          cc.Spawn.create(
+            cc.ScaleTo.create(0.5, 1)
+            cc.FadeTo.create(0.5, 255)
+          )
         )
 
 
