@@ -10,7 +10,7 @@ IntroLayer = cc.Layer.extend(
 
     @.addChild(@titleText)
 
-    @instructionText = new cc.LabelTTF("Collect fuel crates to grow your speed.\n\nPress Space to rise shields.\nPress Z to fire rockets.\n\nTurn on Full Screen for better art.", "Arial", 60)
+    @instructionText = new cc.LabelTTF("Collect fuel crates to grow your speed.\n\nPress Space to rise shields.\nPress Z to fire rockets.\n\nTurn on Full Screen for smoother art.", "Arial", 60)
     @instructionText.setFontFillColor(cc.color(255, 255, 255))
     @instructionText.textAlign = cc.TEXT_ALIGNMENT_CENTER
     @instructionText.setPosition(windowSize.width * 0.5, windowSize.height * 0.45)
@@ -43,7 +43,7 @@ IntroLayer = cc.Layer.extend(
       cc.director.runScene(new GameScene())
 
   onfullScreenTouch: (sender, type)->
-    element = document.getElementById("gameCanvas")
+    element = document.getElementById("body")
 
     if element.requestFullscreen?
       element.requestFullscreen()

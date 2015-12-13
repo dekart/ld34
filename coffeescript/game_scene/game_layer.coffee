@@ -52,7 +52,15 @@ GameLayer = cc.Layer.extend(
   raiseShields: ->
     @shieldsUp = !@shieldsUp
 
-    @shield.setVisible(@shieldsUp)
+    if @shieldsUp
+      @shield.setVisible(true)
+      @shield.stopAllActions()
+      @shield.setScale(0)
+      @shield.runAction(
+        cc.ScaleTo.create(0.1, 1)
+      )
+    else
+      @shield.setVisible(false)
 
     cc.audioEngine.playEffect(
       if @shieldsUp then resources.shield_up_mp3 else resources.shield_down_mp3
