@@ -40,7 +40,10 @@ IntroLayer = cc.Layer.extend(
 
   onStartTouch: (sender, type)->
     if type == ccui.Widget.TOUCH_ENDED
-      cc.director.runScene(new GameScene())
+      first_level = new GameScene()
+      first_level.level = 1
+
+      cc.director.runScene(first_level)
 
   onfullScreenTouch: (sender, type)->
     element = document.getElementById("body")

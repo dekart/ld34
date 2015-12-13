@@ -1,15 +1,14 @@
 GameLayer = cc.Layer.extend(
-  bonuses: []
   health: 10
   fuelCollected: 0
   speed: 0
-  asteroids: []
-  rockets: []
   shieldsUp: false
   inactive: false
 
   ctor: ->
     @._super()
+
+    @asteroids = []
 
     windowSize = cc.director.getWinSize()
 
@@ -35,8 +34,11 @@ GameLayer = cc.Layer.extend(
     )
 
     @.scheduleOnce(=>
+      @.releaseObject()
       @.scheduleNextObject()
     )
+
+    @lastRocketAt = 0
 
 
   onKeyPressed: (keycode)->
@@ -92,6 +94,10 @@ GameLayer = cc.Layer.extend(
     )
 
   launchRocket: ->
+    return if Date.now() < @lastRocketAt + globals.millisecondsBetweenRockets
+
+    @lastRocketAt = Date.now()
+
     target = _.min(@asteroids, (a)-> a.sprite.getPosition().y)
 
     rocket = new Rocket(@ship)
@@ -144,6 +150,8 @@ GameLayer = cc.Layer.extend(
     if @health > 0
       @.getParent().ui.decreaseHealth(@health)
     else
+      @.getParent().ui.decreaseHealth(0)
+
       cc.audioEngine.playEffect(resources.ship_explosion_mp3)
 
       @inactive = true
@@ -156,7 +164,11 @@ GameLayer = cc.Layer.extend(
         cc.Sequence.create(
           cc.DelayTime.create(2)
           cc.CallFunc.create(
-            ()=> cc.director.runScene(new GameOverScene())
+            ()=>
+              game_over_scene = new GameOverScene(@level)
+              game_over_scene.level = @.getParent().level
+
+              cc.director.runScene(game_over_scene)
           )
         )
       )
@@ -186,9 +198,18 @@ GameLayer = cc.Layer.extend(
     windowSize = cc.director.getWinSize()
 
     @ship.runAction(
-      cc.EaseIn.create(
-        cc.MoveBy.create(2, 0, windowSize.height),
-        2
+      cc.Sequence.create(
+        cc.EaseIn.create(
+          cc.MoveBy.create(2, 0, windowSize.height),
+          2
+        )
+        cc.CallFunc.create(=>
+          next_level = new NextLevelScene()
+          next_level.level = @.getParent().level
+          next_level.speed = @.getParent().speed
+
+          cc.director.runScene(next_level)
+        )
       )
     )
 

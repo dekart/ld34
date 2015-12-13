@@ -1,5 +1,5 @@
 GameOverLayer = cc.Layer.extend(
-  ctor: ->
+  ctor: (@level)->
     @._super()
 
     windowSize = cc.director.getWinSize()
@@ -9,6 +9,13 @@ GameOverLayer = cc.Layer.extend(
     @gameOverText.setPosition(windowSize.width * 0.5, windowSize.height * 0.55)
 
     @.addChild(@gameOverText)
+
+    @instructionText = new cc.LabelTTF("Your highest level: #{@level}\nPlease vote and share you score :)", "Arial", 60)
+    @instructionText.setFontFillColor(cc.color(255, 255, 255))
+    @instructionText.textAlign = cc.TEXT_ALIGNMENT_CENTER
+    @instructionText.setPosition(windowSize.width * 0.5, windowSize.height * 0.45)
+
+    @.addChild(@instructionText)
 
     @retryButton = new ccui.Button()
     @retryButton.loadTextureNormal("button.png", ccui.Widget.PLIST_TEXTURE)

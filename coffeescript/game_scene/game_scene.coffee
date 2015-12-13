@@ -1,8 +1,8 @@
 GameScene = cc.Scene.extend(
-  speed: 0.5
-
   onEnter: ->
     @._super()
+
+    @speed = globals.startingSpeed + (@level - 1) * globals.speedGrowthPerLevel
 
     @background = new BackgroundLayer()
     @background.speed = @speed
