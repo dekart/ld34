@@ -21,14 +21,18 @@ GameLayer = cc.Layer.extend(
 
     @.addChild(@shield)
 
+    @health = 10
+    @fuelCollected = 0
+
+    @speed = 1
+
     cc.eventManager.addListener(
       event: cc.EventListener.KEYBOARD
       onKeyPressed: (e)=> @.onKeyPressed(e),
       @
     )
 
-    @.scheduleNextBonus()
-    @.scheduleNextMeteor()
+    @.scheduleNextObject()
 
   onKeyPressed: (keycode)->
     switch keycode
@@ -51,39 +55,34 @@ GameLayer = cc.Layer.extend(
 
     @.addChild(bonus.sprite)
 
-    bonus.launch(Math.random() + 0.7)
+    bonus.launch(@speed * (Math.random() + 0.5))
 
-  scheduleNextBonus: ->
+  scheduleNextObject: ->
     @.scheduleOnce(
       =>
-        @.releaseBonus()
-        @.scheduleNextBonus()
-      1
+        @.releaseObject()
+        @.scheduleNextObject()
+      1 / @speed
     )
 
-  releaseMeteor: ->
+  releaseObject: ->
     windowSize = cc.director.getWinSize()
 
-    meteor = new Meteor()
+    if Math.random() < 0.5
+      object = new Meteor()
+    else
+      object = new Bonus()
 
-    meteor.sprite.setPosition(
+    object.sprite.setPosition(
       windowSize.width * Math.random(),
       windowSize.height * 1.1
     )
 
-    @.addChild(meteor.sprite)
+    @.addChild(object.sprite)
 
-    meteor.launch(Math.random() + 0.7)
+    object.launch(@speed * (Math.random() + 0.5))
 
-  scheduleNextMeteor: ->
-    @.scheduleOnce(
-      =>
-        @.releaseMeteor()
-        @.scheduleNextMeteor()
-      1.5
-    )
-
-  animateHit: ->
+  performHit: ->
     @.getParent().particles.explodeAt(@ship.getPosition())
 
     @ship.runAction(
@@ -95,5 +94,19 @@ GameLayer = cc.Layer.extend(
       )
     )
 
-    @.getParent().ui.blinkRedFrame()
+    @health -= 1
+
+    if @health > 0
+      @.getParent().ui.decreaseHealth(@health)
+    else
+      cc.director.runScene(new GameOverScene())
+
+  collectFuel: ->
+    @fuelCollected += 1
+
+    @.getParent().ui.setFuelCollected(@fuelCollected)
+
+    @speed = 1 + globals.speedGrowth * Math.ceil(@fuelCollected / globals.fuelPerSpeedPoint)
+
+    @.getParent().background.speed = @speed
 )

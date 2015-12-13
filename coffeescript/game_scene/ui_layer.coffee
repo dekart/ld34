@@ -14,8 +14,7 @@ UILayer = cc.Layer.extend(
 
     @speedFrame = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("speed_frame.png"))
 
-    @speedFrame.setPosition(windowSize.width * 0.95, windowSize.height * 0.15)
-
+    @speedFrame.setPosition(windowSize.width * 0.95, windowSize.height * 0.168)
 
     @.addChild(@speedFrame)
 
@@ -30,12 +29,38 @@ UILayer = cc.Layer.extend(
       new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("speed_red.png"))
     ]
 
-
     for marker, index in @speedMarkers
       marker.setPosition(windowSize.width * 0.95, windowSize.height * (0.063 + 0.0245 * index))
-      marker.setVisible(index == 0)
+
+      unless index == 0
+        marker.setVisible(false)
+        marker.setOpacity(0)
 
       @.addChild(marker)
+
+    @fuelCollectedText = new cc.LabelTTF("0", "Arial", 60)
+    @fuelCollectedText.setFontFillColor(cc.color(0, 180, 255))
+    @fuelCollectedText.setPosition(windowSize.width * 0.95, windowSize.height * 0.03)
+
+    @.addChild(@fuelCollectedText)
+
+    @healthFrame = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("health_frame.png"))
+
+    @healthFrame.setPosition(windowSize.width * 0.05, windowSize.height * 0.168)
+
+    @.addChild(@healthFrame)
+
+    @healthProgress = new cc.Sprite(cc.spriteFrameCache.getSpriteFrame("health_progress.png"))
+
+    @healthProgress.setAnchorPoint(cc.p(0.5, 0))
+    @healthProgress.setPosition(windowSize.width * 0.05, windowSize.height * 0.055)
+
+    @.addChild(@healthProgress)
+
+  decreaseHealth: (new_value)->
+    @healthProgress.setScaleY(0.1 * new_value)
+
+    @.blinkRedFrame()
 
   blinkRedFrame: ->
     @redFrame.stopAllActions()
@@ -50,4 +75,23 @@ UILayer = cc.Layer.extend(
         )
       )
     )
+
+  setFuelCollected: (new_value)->
+    @fuelCollectedText.setString(new_value)
+
+    if new_value % globals.fuelPerSpeedPoint == 0
+      @.updateSpeedIndicator(new_value)
+
+  updateSpeedIndicator: (new_fuel)->
+    lastMarkerIndex = Math.floor(new_fuel / globals.fuelPerSpeedPoint)
+    lastMarkerIndex = @speedMarkers.length - 1 if lastMarkerIndex >= @speedMarkers.length
+
+    for i in [0..lastMarkerIndex]
+      marker = @speedMarkers[i]
+
+      unless marker.isVisible()
+        marker.setVisible(true)
+        marker.runAction(
+          new cc.FadeTo(0.5, 255)
+        )
 )

@@ -72,7 +72,11 @@ cc.game.onStart = function(){
     //load resources
 
     cc.LoaderScene.preload(resourcePaths, function () {
+      // Cache all used sprites here
+      cc.spriteFrameCache.addSpriteFrames(resources.ui_plist);
+
       cc.director.runScene(new GameScene());
+      // cc.director.runScene(new GameOverScene());
 
       document.getElementById('gameCanvas').focus()
     }, this);

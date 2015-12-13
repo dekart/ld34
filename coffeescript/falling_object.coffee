@@ -11,7 +11,7 @@ FallingObject = class
 
     distanceToShield = 1 - 90 / 1242
 
-    totalTime = 5 * speed
+    totalTime = 5 / speed
     timeToShield = totalTime * distanceToShield
 
     shieldPointPosition = {

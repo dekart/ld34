@@ -16,7 +16,9 @@ Bonus = class extends FallingObject
     )
 
   onShieldMissed: ->
-    shipPosition = @sprite.getParent().getChildByTag("ship").getPosition()
+    game = @sprite.getParent()
+
+    shipPosition = game.getChildByTag("ship").getPosition()
 
     @sprite.runAction(new cc.MoveTo(0.1, shipPosition.x, shipPosition.y))
 
@@ -28,3 +30,5 @@ Bonus = class extends FallingObject
         )
       )
     )
+
+    game.collectFuel()
