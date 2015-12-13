@@ -1,6 +1,6 @@
 GameLayer = cc.Layer.extend(
   bonuses: []
-  health: 1#10
+  health: 10
   fuelCollected: 0
   speed: 1
   asteroids: []
@@ -82,8 +82,6 @@ GameLayer = cc.Layer.extend(
 
   launchRocket: ->
     target = _.min(@asteroids, (a)-> a.sprite.getPosition().y)
-
-    return unless target instanceof Asteroid
 
     rocket = new Rocket(@ship)
 

@@ -12,7 +12,11 @@ Rocket = class
 
   launch: (target)->
     myPosition = @sprite.getPosition()
-    targetPosition = target.startingPosition
+
+    if target.startingPosition?
+      targetPosition = target.startingPosition
+    else
+      targetPosition = cc.p(@windowSize.width / 2, @windowSize.height * 1.1)
 
     distance = Math.sqrt(
       Math.pow((myPosition.x - targetPosition.x), 2) + Math.pow(myPosition.y - targetPosition.y, 2)

@@ -43,7 +43,7 @@ BackgroundLayer = cc.Layer.extend(
       @sprite1.setPositionY(@sprite1.getPositionY() + windowSize.height)
       @sprite2.setPositionY(@sprite2.getPositionY() + windowSize.height)
 
-    scrollSpeed = 0.25 / @speed
+    scrollSpeed = 0.25 / ((@speed - 1) * 5 + 1)
 
     @sprite1.runAction(new cc.MoveBy(scrollSpeed, 0, -windowSize.height * 0.05))
     @sprite2.runAction(
@@ -62,7 +62,7 @@ BackgroundLayer = cc.Layer.extend(
       @sprite3.setPositionY(@sprite3.getPositionY() + windowSize.height)
       @sprite4.setPositionY(@sprite4.getPositionY() + windowSize.height)
 
-    scrollSpeed = 0.25 / @speed
+    scrollSpeed = 0.25 / ((@speed - 1) * 5 + 1)
 
     @sprite3.runAction(new cc.MoveBy(scrollSpeed, 0, -windowSize.height * 0.01))
     @sprite4.runAction(
