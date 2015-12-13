@@ -32,7 +32,7 @@ Asteroid = class extends FallingObject
   takeHit: ->
     @health -= 1
 
-    @sprite.getParent().getParent().particles.explodeAt(@sprite.getPosition())
-
     if @health <= 0
+      @sprite.getParent().getParent().particles.explodeAt(@sprite.getPosition())
+
       @.removeFromScene()
