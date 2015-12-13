@@ -2,7 +2,7 @@ GameLayer = cc.Layer.extend(
   bonuses: []
   health: 10
   fuelCollected: 0
-  speed: 1
+  speed: 0
   asteroids: []
   rockets: []
   shieldsUp: false
@@ -34,7 +34,10 @@ GameLayer = cc.Layer.extend(
       @
     )
 
-    @.scheduleNextObject()
+    @.scheduleOnce(=>
+      @.scheduleNextObject()
+    )
+
 
   onKeyPressed: (keycode)->
     return if @inactive
@@ -104,7 +107,7 @@ GameLayer = cc.Layer.extend(
 
     chance = Math.random()
 
-    if chance < 0.45
+    if chance < 0.40
       object = new Meteor()
     else if chance < 0.9
       object = new Bonus()
@@ -168,7 +171,7 @@ GameLayer = cc.Layer.extend(
 
     @.getParent().ui.setFuelCollected(@fuelCollected)
 
-    @speed = 1 + globals.speedGrowth * Math.ceil(@fuelCollected / globals.fuelPerSpeedPoint)
+    @speed = @.getParent().speed + globals.speedGrowth * Math.ceil(@fuelCollected / globals.fuelPerSpeedPoint)
 
     @.getParent().background.speed = @speed
 

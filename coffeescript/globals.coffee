@@ -1,4 +1,4 @@
 globals = {
-  fuelPerSpeedPoint: 3
+  fuelPerSpeedPoint: 5
   speedGrowth: 0.1
 }

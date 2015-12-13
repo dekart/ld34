@@ -1,4 +1,6 @@
 GameOverScene = cc.Scene.extend(
+  speed: 1
+
   onEnter: ->
     @._super()
 

@@ -1,5 +1,5 @@
 BackgroundLayer = cc.Layer.extend(
-  speed: 1
+  speed: 0
 
   ctor: ->
     @._super()
@@ -43,12 +43,14 @@ BackgroundLayer = cc.Layer.extend(
       @sprite1.setPositionY(@sprite1.getPositionY() + windowSize.height)
       @sprite2.setPositionY(@sprite2.getPositionY() + windowSize.height)
 
-    scrollSpeed = 0.25 / ((@speed - 1) * 5 + 1)
+    baseSpeed = @.getParent().speed
 
-    @sprite1.runAction(new cc.MoveBy(scrollSpeed, 0, -windowSize.height * 0.05))
+    scrollTime = 0.25 / ((@speed - baseSpeed) * 5 + baseSpeed)
+
+    @sprite1.runAction(new cc.MoveBy(scrollTime, 0, -windowSize.height * 0.05))
     @sprite2.runAction(
       new cc.Sequence(
-        new cc.MoveBy(scrollSpeed, 0, -windowSize.height * 0.05),
+        new cc.MoveBy(scrollTime, 0, -windowSize.height * 0.05),
         new cc.CallFunc(()=>
           @.scheduleForegroundMovement()
         )
@@ -62,12 +64,14 @@ BackgroundLayer = cc.Layer.extend(
       @sprite3.setPositionY(@sprite3.getPositionY() + windowSize.height)
       @sprite4.setPositionY(@sprite4.getPositionY() + windowSize.height)
 
-    scrollSpeed = 0.25 / ((@speed - 1) * 5 + 1)
+    baseSpeed = @.getParent().speed
 
-    @sprite3.runAction(new cc.MoveBy(scrollSpeed, 0, -windowSize.height * 0.01))
+    scrollTime = 0.25 / ((@speed - baseSpeed) * 5 + baseSpeed)
+
+    @sprite3.runAction(new cc.MoveBy(scrollTime, 0, -windowSize.height * 0.01))
     @sprite4.runAction(
       new cc.Sequence(
-        new cc.MoveBy(scrollSpeed, 0, -windowSize.height * 0.01),
+        new cc.MoveBy(scrollTime, 0, -windowSize.height * 0.01),
         new cc.CallFunc(()=>
           @.scheduleBackgroundMovement()
         )
