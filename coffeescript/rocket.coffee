@@ -39,6 +39,8 @@ Rocket = class
 
     @.scheduleTargetCheck()
 
+    cc.audioEngine.playEffect(resources.rocket_mp3)
+
   scheduleTargetCheck: ->
     @sprite.scheduleOnce(
       ()=> @.checkTargetHit()

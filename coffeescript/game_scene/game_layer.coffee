@@ -41,15 +41,22 @@ GameLayer = cc.Layer.extend(
 
     switch keycode
       when 32
-        @shieldsUp = !@shieldsUp
-
-        @shield.setVisible(@shieldsUp)
+        @.raiseShields()
       when 90
         @.launchRocket() unless @shieldsUp
       when 82
         document.location = document.location
       else
         console.log("key pressed: ", keycode)
+
+  raiseShields: ->
+    @shieldsUp = !@shieldsUp
+
+    @shield.setVisible(@shieldsUp)
+
+    cc.audioEngine.playEffect(
+      if @shieldsUp then resources.shield_up_mp3 else resources.shield_down_mp3
+    )
 
   releaseBonus: ->
     windowSize = cc.director.getWinSize()
@@ -133,6 +140,8 @@ GameLayer = cc.Layer.extend(
   collectFuel: ->
     return if @inWarp
 
+    cc.audioEngine.playEffect(resources.container_mp3)
+
     @fuelCollected += 1
 
     @.getParent().ui.setFuelCollected(@fuelCollected)
@@ -159,6 +168,8 @@ GameLayer = cc.Layer.extend(
     )
 
     @shield.setVisible(false)
+
+    cc.audioEngine.playEffect(resources.warp_mp3)
 
 
   removeAsteroid: (asteroid)->

@@ -8,6 +8,8 @@ BackgroundLayer = cc.Layer.extend(
     @sprite2 = new cc.Sprite(resources.background_jpg)
     @sprite1.setOpacity(100)
     @sprite2.setOpacity(100)
+    @sprite1.setScaleX(-1)
+    @sprite2.setScaleX(-1)
 
     @sprite3 = new cc.Sprite(resources.background_jpg)
     @sprite4 = new cc.Sprite(resources.background_jpg)
@@ -22,6 +24,13 @@ BackgroundLayer = cc.Layer.extend(
     @sprite3.setLocalZOrder(2)
     @sprite4.setLocalZOrder(1)
 
+    windowSize = cc.director.getWinSize()
+
+    @sprite1.setPosition(windowSize.width * 0.5, windowSize.height * 0.5)
+    @sprite2.setPosition(windowSize.width * 0.5, windowSize.height * 1.5)
+    @sprite3.setPosition(windowSize.width * 0.5, windowSize.height * 0.5)
+    @sprite4.setPosition(windowSize.width * 0.5, windowSize.height * 1.5)
+
     @.scheduleOnce(=>
       @.scheduleForegroundMovement()
       @.scheduleBackgroundMovement()
@@ -31,8 +40,8 @@ BackgroundLayer = cc.Layer.extend(
     windowSize = cc.director.getWinSize()
 
     if @sprite2.getPosition().y <= windowSize.height * 0.5
-      @sprite1.setPosition(windowSize.width * 0.5, windowSize.height * 0.5)
-      @sprite2.setPosition(windowSize.width * 0.5, windowSize.height * 1.5)
+      @sprite1.setPositionY(@sprite1.getPositionY() + windowSize.height)
+      @sprite2.setPositionY(@sprite2.getPositionY() + windowSize.height)
 
     scrollSpeed = 0.25 / @speed
 
@@ -49,16 +58,16 @@ BackgroundLayer = cc.Layer.extend(
   scheduleBackgroundMovement: ->
     windowSize = cc.director.getWinSize()
 
-    if @sprite4.getPosition().y <= windowSize.height * 0.3
-      @sprite3.setPosition(windowSize.width * 0.5, windowSize.height * 0.3)  # Twist backgrounds a little to avoid blurring effect
-      @sprite4.setPosition(windowSize.width * 0.5, windowSize.height * 1.3)
+    if @sprite4.getPosition().y <= windowSize.height * 0.5
+      @sprite3.setPositionY(@sprite3.getPositionY() + windowSize.height)
+      @sprite4.setPositionY(@sprite4.getPositionY() + windowSize.height)
 
     scrollSpeed = 0.25 / @speed
 
-    @sprite3.runAction(new cc.MoveBy(scrollSpeed, 0, -windowSize.height * 0.0125))
+    @sprite3.runAction(new cc.MoveBy(scrollSpeed, 0, -windowSize.height * 0.01))
     @sprite4.runAction(
       new cc.Sequence(
-        new cc.MoveBy(scrollSpeed, 0, -windowSize.height * 0.0125),
+        new cc.MoveBy(scrollSpeed, 0, -windowSize.height * 0.01),
         new cc.CallFunc(()=>
           @.scheduleBackgroundMovement()
         )

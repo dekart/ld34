@@ -75,6 +75,8 @@ cc.game.onStart = function(){
       // Cache all used sprites here
       cc.spriteFrameCache.addSpriteFrames(resources.ui_plist);
 
+      cc.audioEngine.playMusic(resources.music_mp3, true);
+
       cc.director.runScene(new GameScene());
       // cc.director.runScene(new GameOverScene());
 

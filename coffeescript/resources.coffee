@@ -1,4 +1,12 @@
 resources = {
+  music_mp3:           "res/music.mp3"
+  explosion_mp3:           "res/explosion.mp3"
+  shield_up_mp3:           "res/shield_up.mp3"
+  shield_down_mp3:           "res/shield_down.mp3"
+  shield_hit_mp3:           "res/shield_hit.mp3"
+  rocket_mp3:           "res/rocket.mp3"
+  warp_mp3:           "res/warp.mp3"
+  container_mp3:           "res/container.mp3"
   ui_png:           "res/ui.png"
   ui_plist:         "res/ui.plist"
   background_jpg:   "res/background.jpg"
