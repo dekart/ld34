@@ -10,12 +10,19 @@ IntroLayer = cc.Layer.extend(
 
     @.addChild(@titleText)
 
-    @instructionText = new cc.LabelTTF("Collect fuel crates to grow your speed.\n\nPress Space to rise shields.\nPress Z to fire rockets.", "Arial", 60)
+    @instructionText = new cc.LabelTTF("Collect fuel crates to grow your speed.\n\nPress Space to rise shields.\nPress Z to fire rockets.\n\nTurn on Full Screen for better art.", "Arial", 60)
     @instructionText.setFontFillColor(cc.color(255, 255, 255))
     @instructionText.textAlign = cc.TEXT_ALIGNMENT_CENTER
     @instructionText.setPosition(windowSize.width * 0.5, windowSize.height * 0.45)
 
     @.addChild(@instructionText)
+
+    @fullScreenButton = new ccui.Button()
+    @fullScreenButton.loadTextureNormal("full_screen.png", ccui.Widget.PLIST_TEXTURE)
+    @fullScreenButton.setPosition(windowSize.width * 0.5, windowSize.height * 0.30)
+    @fullScreenButton.addTouchEventListener(@.onfullScreenTouch, @)
+
+    @.addChild(@fullScreenButton)
 
     @startButton = new ccui.Button()
     @startButton.loadTextureNormal("button.png", ccui.Widget.PLIST_TEXTURE)
@@ -34,4 +41,16 @@ IntroLayer = cc.Layer.extend(
   onStartTouch: (sender, type)->
     if type == ccui.Widget.TOUCH_ENDED
       cc.director.runScene(new GameScene())
+
+  onfullScreenTouch: (sender, type)->
+    element = document.getElementById("gameCanvas")
+
+    if element.requestFullscreen?
+      element.requestFullscreen()
+    else if element.msRequestFullscreen?
+      element.msRequestFullscreen()
+    else if element.mozRequestFullScreen?
+      element.mozRequestFullScreen()
+    else if element.webkitRequestFullscreen?
+      element.webkitRequestFullscreen()
 )
